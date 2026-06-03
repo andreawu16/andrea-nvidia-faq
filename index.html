@@ -1,87 +1,419 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>NVIDIA Taiwan Q&A by Andrea</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NVIDIA Taiwan Recruitment · Andrea Wu</title>
   <style>
+    :root {
+      --green: #76b900;
+      --green-dark: #5a8f00;
+      --black: #1a1a1a;
+      --gray: #555;
+      --light: #f5f5f5;
+      --border: #e0e0e0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f7f9fb;
-      color: #333;
-      padding: 2rem;
-      max-width: 800px;
-      margin: auto;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      color: var(--black);
+      background: #fff;
+      line-height: 1.7;
     }
-    h1, h2 {
-      color: #0769ad;
+
+    /* ── HERO ── */
+    .hero {
+      background: #1a1a1a;
+      color: #fff;
+      padding: 56px 24px 48px;
+      text-align: center;
     }
-    .faq-section {
-      margin-bottom: 2.5rem;
+    .hero .nvidia-badge {
+      display: inline-block;
+      background: var(--green);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 2px;
+      margin-bottom: 20px;
     }
-    .question {
-      font-weight: bold;
-      margin-top: 1.2rem;
+    .hero h1 {
+      font-size: clamp(24px, 5vw, 38px);
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 12px;
     }
-    .answer {
-      margin-left: 1rem;
-      line-height: 1.6;
+    .hero h1 span { color: var(--green); }
+    .hero p {
+      color: #bbb;
+      font-size: 15px;
+      max-width: 520px;
+      margin: 0 auto 28px;
     }
-    .contact {
-      background-color: #e3f2fd;
-      padding: 1rem;
-      border-radius: 10px;
-      margin-top: 2rem;
+    .hero-links {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
     }
-    a {
-      color: #0077b6;
+    .btn-primary {
+      background: var(--green);
+      color: #fff;
+      padding: 10px 24px;
+      border-radius: 4px;
       text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      transition: background .2s;
+    }
+    .btn-primary:hover { background: var(--green-dark); }
+    .btn-ghost {
+      border: 1px solid #555;
+      color: #ccc;
+      padding: 10px 24px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 14px;
+      transition: border-color .2s, color .2s;
+    }
+    .btn-ghost:hover { border-color: #aaa; color: #fff; }
+
+    /* ── LAYOUT ── */
+    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+    section { padding: 56px 0; }
+    section + section { border-top: 1px solid var(--border); }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 8px;
+    }
+    h2 {
+      font-size: clamp(20px, 3vw, 26px);
+      font-weight: 700;
+      margin-bottom: 32px;
+      color: var(--black);
+    }
+
+    /* ── HIGHLIGHTS GRID ── */
+    .highlights {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px;
+      transition: box-shadow .2s;
+    }
+    .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.08); }
+    .card .icon {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+    .card h3 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .card p {
+      font-size: 13.5px;
+      color: var(--gray);
+    }
+
+    /* ── ROLES ── */
+    .roles {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+    }
+    .role-chip {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 14px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--black);
+      text-decoration: none;
+      transition: border-color .2s, color .2s;
+    }
+    .role-chip:hover {
+      border-color: var(--green);
+      color: var(--green);
+    }
+    .role-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      flex-shrink: 0;
+    }
+
+    /* ── FAQ ── */
+    .faq-list { display: flex; flex-direction: column; gap: 0; }
+    details {
+      border-bottom: 1px solid var(--border);
+    }
+    details:first-of-type { border-top: 1px solid var(--border); }
+    summary {
+      padding: 18px 4px;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after {
+      content: "+";
+      font-size: 20px;
+      color: var(--green);
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    details[open] summary::after { content: "−"; }
+    .faq-body {
+      padding: 0 4px 18px;
+      font-size: 14.5px;
+      color: var(--gray);
+    }
+    .faq-body a { color: var(--green); text-decoration: none; }
+    .faq-body a:hover { text-decoration: underline; }
+
+    /* ── CONTACT ── */
+    .contact-box {
+      background: var(--light);
+      border-radius: 10px;
+      padding: 40px;
+      display: flex;
+      gap: 32px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .contact-text { flex: 1; min-width: 220px; }
+    .contact-text h3 {
+      font-size: 19px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .contact-text p { font-size: 14px; color: var(--gray); }
+    .contact-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--black);
+      text-decoration: none;
+    }
+    .contact-link:hover { color: var(--green); }
+    .contact-link .icon-sm { font-size: 16px; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 28px 24px;
+      font-size: 12px;
+      color: #aaa;
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 480px) {
+      .contact-box { padding: 28px 20px; }
     }
   </style>
 </head>
 <body>
-  <h1>NVIDIA Taiwan Recruitment Q&A</h1>
 
-  <div class="faq-section">
-    <h2>📌 About the Hiring Process</h2>
-
-    <div class="question">1. What positions are currently open?</div>
-    <div class="answer">We are actively hiring across AI, GPU, software, and hardware fields. Please visit the <a href="https://www.nvidia.com/en-us/about-nvidia/careers/" target="_blank">NVIDIA Careers page</a> for the latest updates.</div>
-
-    <div class="question">2. What’s the general hiring process like?</div>
-    <div class="answer">The process usually includes resume screening, few rounds of technical interviews, and a final interview with the hiring manager. It typically takes 2 to 4 weeks to complete.</div>
-
-    <div class="question">3. What should I prepare for the interview?</div>
-    <div class="answer">It depends on the role, but common components include coding tests, system design questions, or short presentations.</div>
-
-    <div class="question">4. Does NVIDIA provide relocation or visa support?</div>
-    <div class="answer">Yes! We offer full relocation and work visa support for eligible candidates applying to Taiwan-based roles.</div>
-
-    <div class="question">5. Can overseas candidates apply for Taiwan positions?</div>
-    <div class="answer">Absolutely. We welcome applicants who are currently working or studying abroad and open to relocating to Taiwan.</div>
+<!-- HERO -->
+<div class="hero">
+  <div class="nvidia-badge">NVIDIA Taiwan Recruiting</div>
+  <h1>Thinking about joining<br/><span>NVIDIA Taiwan?</span></h1>
+  <p>I'm Andrea Wu, a Talent Sourcer at NVIDIA Taiwan. I help connect talented engineers with opportunities here. Feel free to reach out.</p>
+  <div class="hero-links">
+    <a class="btn-primary" href="mailto:andrewu@nvidia.com">Send me your resume</a>
+    <a class="btn-ghost" href="https://www.linkedin.com/in/andrea-wu-1393a282/" target="_blank" rel="noopener">Connect on LinkedIn</a>
   </div>
+</div>
 
-  <div class="faq-section">
-    <h2>👩‍💻 About Me (Andrea Wu)</h2>
-
-    <div class="question">1. Who are you and how can I reach you?</div>
-    <div class="answer">I’m a Talent Sourcer at NVIDIA Taiwan, focusing on connecting overseas engineers with opportunities in Taiwan. You can reach out via <a href="mailto:andrewu@nvidia.com">email</a> or <a href="https://www.linkedin.com/in/andrea-wu-1393a282/" target="_blank">LinkedIn</a>.</div>
-
-    <div class="question">2. Can I share my resume with you?</div>
-    <div class="answer">Of course! Please email it to me and include a brief introduction about your experience and interests.</div>
-
-    <div class="question">3. Will you refer me internally?</div>
-    <div class="answer">If your profile aligns with our roles, I’ll flag it internally and help make it visible to our global and campus hiring teams.</div>
+<!-- NVIDIA TAIWAN HIGHLIGHTS -->
+<section>
+  <div class="container">
+    <div class="section-label">Why NVIDIA Taiwan</div>
+    <h2>Like No Place You've Ever Worked</h2>
+    <div class="highlights">
+      <div class="card">
+        <div class="icon">🌟</div>
+        <h3>Work That Matters</h3>
+        <p>You'll solve some of the world's hardest problems and discover never-before-seen ways to improve the quality of life for people everywhere.</p>
+      </div>
+      <div class="card">
+        <div class="icon">👥</div>
+        <h3>Culture of Belonging</h3>
+        <p>We're an eclectic, passionate group of professionals dedicated to solving the world's biggest challenges. Everyone contributes. Everyone belongs.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🏥</div>
+        <h3>Caring For Your Health</h3>
+        <p>When it comes to your health, there's no such thing as one-size-fits-all. We offer a range of resources to support your unique needs.</p>
+      </div>
+      <div class="card">
+        <div class="icon">💰</div>
+        <h3>Financial Resources</h3>
+        <p>Fund your future with our stock-purchase and retirement-savings plans. Our compensation programs are designed to reward your contributions.</p>
+      </div>
+      <div class="card">
+        <div class="icon">⏰</div>
+        <h3>Time Off and Holidays</h3>
+        <p>Take time to recharge with our time-off benefits, as well as paid holidays throughout the year.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🤝</div>
+        <h3>Support Programs</h3>
+        <p>Make sure you and your loved ones get all the support you need, from caregiver assistance to mental health resources and more.</p>
+      </div>
+    </div>
   </div>
+</section>
 
-  <div class="contact">
-    🎯 Let's connect!  
-    <br/>
-    Andrea Wu｜Talent Sourcer, NVIDIA Taiwan  
-    <br/>
-    Email: <a href="mailto:andrewu@nvidia.com">andrewu@nvidia.com</a>  
-    <br/>
-    LinkedIn: <a href="https://www.linkedin.com/in/andrea-wu-1393a282/" target="_blank">linkedin.com/in/andrea-wu-1393a282</a>
+<!-- ROLES WE HIRE -->
+<section>
+  <div class="container">
+    <div class="section-label">Open Roles</div>
+    <h2>Areas I recruit for</h2>
+    <div class="roles">
+      <a class="role-chip" href="https://www.nvidia.com/en-us/about-nvidia/careers/" target="_blank" rel="noopener">
+        <span class="role-dot"></span>AI / Machine Learning
+      </a>
+      <a class="role-chip" href="https://www.nvidia.com/en-us/about-nvidia/careers/" target="_blank" rel="noopener">
+        <span class="role-dot"></span>GPU Architecture
+      </a>
+      <a class="role-chip" href="https://www.nvidia.com/en-us/about-nvidia/careers/" target="_blank" rel="noopener">
+        <span class="role-dot"></span>Software Engineering
+      </a>
+      <a class="role-chip" href="https://www.nvidia.com/en-us/about-nvidia/careers/" target="_blank" rel="noopener">
+        <span class="role-dot"></span>Hardware / VLSI
+      </a>
+      <a class="role-chip" href="https://www.nvidia.com/en-us/about-nvidia/careers/" target="_blank" rel="noopener">
+        <span class="role-dot"></span>Systems & Infrastructure
+      </a>
+      <a class="role-chip" href="https://www.nvidia.com/en-us/about-nvidia/careers/" target="_blank" rel="noopener">
+        <span class="role-dot"></span>Data Center / Cloud
+      </a>
+      <a class="role-chip" href="https://www.nvidia.com/en-us/about-nvidia/careers/" target="_blank" rel="noopener">
+        <span class="role-dot"></span>Technical Program Management
+      </a>
+      <a class="role-chip" href="https://www.nvidia.com/en-us/about-nvidia/careers/" target="_blank" rel="noopener">
+        <span class="role-dot"></span>Product Engineering
+      </a>
+      <a class="role-chip" href="https://www.nvidia.com/en-us/about-nvidia/careers/" target="_blank" rel="noopener">
+        <span class="role-dot"></span>Product Test Engineering
+      </a>
+    </div>
   </div>
+</section>
+
+<!-- FAQ -->
+<section>
+  <div class="container">
+    <div class="section-label">FAQ</div>
+    <h2>Common questions</h2>
+    <div class="faq-list">
+
+      <details>
+        <summary>What's the general hiring process?</summary>
+        <div class="faq-body">
+          The process typically includes resume screening, a few rounds of technical interviews (coding test, system design, or role-specific assessment), and a final interview with the hiring manager. End-to-end it usually takes 2–4 weeks.
+        </div>
+      </details>
+
+      <details>
+        <summary>What should I prepare for the interview?</summary>
+        <div class="faq-body">
+          It depends on the role. Software engineers should expect coding and system design rounds. Hardware roles often involve domain knowledge deep-dives. I'll brief you on what to expect once we connect.
+        </div>
+      </details>
+
+      <details>
+        <summary>Can candidates outside of Taiwan apply?</summary>
+        <div class="faq-body">
+          Most of our open roles are targeting Taiwan-based talent, but I'm always happy to connect if you're open to relocating. Relocation support and work visa assistance are available for eligible roles.
+        </div>
+      </details>
+
+      <details>
+        <summary>What positions are currently open?</summary>
+        <div class="faq-body">
+          We're actively hiring across AI, GPU, software, and hardware. Visit the <a href="https://www.nvidia.com/en-us/about-nvidia/careers/" target="_blank" rel="noopener">NVIDIA Careers page</a> for the latest listings, or reach out to me directly and I'll share what's most relevant to your background.
+        </div>
+      </details>
+
+      <details>
+        <summary>Will you refer me internally?</summary>
+        <div class="faq-body">
+          If your profile aligns with our open roles, I'll flag it to our internal hiring teams and help make your application visible. Send me your resume with a short intro about your experience and interests.
+        </div>
+      </details>
+
+      <details>
+        <summary>How do I submit my resume?</summary>
+        <div class="faq-body">
+          Email me at <a href="mailto:andrewu@nvidia.com">andrewu@nvidia.com</a> with your resume and a brief note about your background and target role. The more specific you are, the faster I can match you.
+        </div>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section>
+  <div class="container">
+    <div class="contact-box">
+      <div class="contact-text">
+        <h3>Let's connect, Andrea Wu</h3>
+        <p>Talent Sourcer · NVIDIA Taiwan<br/>Feel free to reach out about open roles or to learn more about life at NVIDIA.</p>
+      </div>
+      <div class="contact-actions">
+        <a class="contact-link" href="mailto:andrewu@nvidia.com">
+          <span class="icon-sm">✉️</span> andrewu@nvidia.com
+        </a>
+        <a class="contact-link" href="https://www.linkedin.com/in/andrea-wu-1393a282/" target="_blank" rel="noopener">
+          <span class="icon-sm">🔗</span> LinkedIn Profile
+        </a>
+        <a class="contact-link btn-primary" style="margin-top:4px; padding:10px 20px; border-radius:4px; justify-content:center;" href="mailto:andrewu@nvidia.com">
+          Send Resume →
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 Andrea Wu · NVIDIA Taiwan · This page is for informational purposes and subject to change.
+</footer>
+
 </body>
 </html>
